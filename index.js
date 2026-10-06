@@ -18,3 +18,16 @@ const pool = new Pool({
     password: '12345678',
     port: 5432,
 })
+
+app.get('/', (req, res, next) => {
+    console.log("TEST DATA :");
+    pool.query('SELECT * from biodata')
+    .then(testData => {
+        console.log(testData);
+        res.send(testData.rows)
+    })
+    .catch(err => {
+        console.error(err);
+        res.status(500).send('Internal server error');
+    });
+})
